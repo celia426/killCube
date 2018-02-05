@@ -1,3 +1,8 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
 main{
 	width: 400px;
 	height: 400px;
@@ -30,11 +35,17 @@ main{
 }
 
 aside{
-	display: flex;
-	justify-content: center;
-	margin-top: 20px;
+	text-align: center;
 }
 
 input{
-	margin-left: 20px;
+	margin-top: 20px;
+	width: 80px;
+	height: 40px;
+}
+
+p{
+	display: inline-block;
+	margin-top: 20px;
+	font-weight: bold;
 }

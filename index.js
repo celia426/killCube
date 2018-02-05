@@ -1,5 +1,6 @@
 var speed = 4;
 var clock = null;
+var flg = 0;
 
 //游戏初始化
 function init()
@@ -12,6 +13,7 @@ function init()
 		createrow();
 	}
 
+	//事件冒泡允许多个操作被集中处理（把事件处理器添加到一个父级元素上，避免把事件处理器添加到多个子级元素上）
 	document.getElementById('main').onclick = function(ev)
 	{
 		judge(ev);
@@ -25,7 +27,11 @@ function judge(ev)
 {
 	if(ev.target.className.indexOf('black') == -1)
 	{
-		fail();
+		if(flg == 1)
+		{
+			fail();
+			flg = 0;
+		}
 	}
 	else
 	{
@@ -41,12 +47,23 @@ function fail()
 	clearInterval(clock);
 	var con = document.getElementById('con');
 	var score = document.getElementById('score');
+	var msc = document.getElementById('maxScore');
+
+	//弹出最终得分
 	main.removeChild(con);
 	confirm("你的最终得分是：" + parseInt(score.innerHTML));
 
+	//记录最高分
+	if(parseInt(score.innerHTML) > parseInt(msc.innerHTML))
+	{
+		msc.innerHTML = score.innerHTML;
+	}
+	
+	//将布局恢复原样
 	var div = document.createElement('div');
 	div.setAttribute('id','con');
 	main.appendChild(div);
+	score.innerHTML = 0;
 }
 
 //创建div,className是div的类名
@@ -91,7 +108,6 @@ function createcell()
 //让黑块动起来
 function move()
 {
-	var main = document.getElementById('main');
 	var con = document.getElementById('con');
 	var top = parseInt(window.getComputedStyle(con,null)['top']);
 
@@ -161,4 +177,5 @@ var car = document.getElementById('start');
 car.onclick = function()
 {
 	init();
+	flg = 1;
 }
